@@ -1,53 +1,48 @@
-class Libro {
-    constructor(titulo, autor) {
-        this.titulo = titulo;
-        this.autor = autor;
-        this.estado = true;
+class CuentaBancaria {
+    constructor(titular, saldo, numerocuenta) {
+        this.titular = titular
+        this.saldo = saldo
+        this.numerocuenta = numerocuenta
+    }
+    set Titular(titular) {
+        return this.titular = titular;
+    }
+    set Saldo(saldo) {
+        return this.saldo = saldo;
+    }
+    get Titular() {
+        return this.titular;
+    }
+    get Saldo() {
+        return this.saldo;
     }
 
-    disponible() {
-        return this.estado
-    }
-
-    prestar() {
-        return this.estado = false
-    }
-
-
-}
-
-class Socio {
-    constructor(nombre, identificacion) {
-        this.nombre = nombre;
-        this.identificacion = identificacion;
-        this.librosPrestados = [];
-    }
-
-    prestarLibro(libro) {
-        if (libro.disponible()) {
-            libro.prestar()
-            this.librosPrestados.push(libro);
-            console.log(`El libro "${libro.titulo}" ha sido prestado a ${socio.nombre}.`);
-        } else {
-            console.log(`El libro "${libro.titulo}" no está disponible para préstamo.`);
+    retiro(cantidad) {
+        if(cantidad> this.saldo){
+            return "Saldo insuficiente $" + this.saldo
+        }else{
+            return "Retiro con exito $" + (this.saldo= this.saldo- cantidad)
         }
-    }
- 
-    mostrarLibros() {
-        console.log(`Los libros prestados por ${socio1.nombre} son:`);
-        socio1.librosPrestados.forEach((libro) => {
-            console.log(`${libro.titulo} (${libro.autor})`);
-        });
-        const libro1 = new Libro("El gran Gatsby", "F. Scott Fitzgerald");
-        const libro2 = new Libro("1984", "George Orwell");
-
-        const socio1 = new Socio("Juan", 123456789);
-        const socio2 = new Socio("María", 987654321);
+        
     }
 
+    deposito(cantidad) {
+       return "Su saldo actual es $" + (this.saldo = this.saldo+cantidad)
 }
+}
+const cliente=new CuentaBancaria("Patricia",0,"0000-2")
+const btnRetiro = document.getElementById("btnRetiro")
+const cuenta = new CuentaBancaria("Sol Lazo", 1000, "123456789");
+const btnAbono = document.getElementById("btnAbono")
+btnRetiro.addEventListener("click", () => {
+    const cantidad = document.getElementById("cantidad").value
+    const montoActual= document.getElementById("montoActual")
+    montoActual.innerText=cliente.retiro(cantidad)
+})
 
+btnAbono.addEventListener("click",() =>{
+    const cantidad=parseFloat(document.getElementById("cantidad").value)
 
-
-
-
+    const montoActual=document.getElementById("montoActual")
+    montoActual.innerText=cliente.deposito(cantidad)
+})
